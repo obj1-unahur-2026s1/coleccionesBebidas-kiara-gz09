@@ -11,8 +11,12 @@ object cianuro {
   method rendimientoQueOtorga(dosisConsumida) = 0
 }
 
+object agua {
+  method rendimientoQueOtorga(dosisConsumida) = 1
+}
+
 object licuadoFrutas {
-  var nutrientes = [leche.nutriente(), banana.nutriente(), hielo.nutriente()]
+  var property nutrientes = [leche.nutriente(), banana.nutriente(), hielo.nutriente()]
   method agregarIngrediente(unIngrediente) {
     nutrientes.add(unIngrediente.nutriente())
   }
@@ -20,7 +24,25 @@ object licuadoFrutas {
 }
 
 object aguaSaborizada {
-  
+  var bebida25 = whisky
+  method cambiarBebida(otraBebida) {
+    bebida25 = otraBebida
+  }
+  method rendimientoQueOtorga(dosisConsumida) = agua.rendimientoQueOtorga(dosisConsumida) + bebida25.rendimientoQueOtorga(dosisConsumida*0.25)
+}
+
+object coctel {
+  var property composicion = [whisky, agua, licuadoFrutas]
+  const cantBebidas = composicion.size()
+  method agregarIngrediente(unIngrediente) {
+    composicion.add(unIngrediente)
+  }
+  method rendimientoQueOtorga(dosisConsumida){
+    const proporcion = dosisConsumida / cantBebidas
+    var rendimiento = 1
+    composicion.forEach({ b => rendimiento * b.rendimientoQueOtorga(proporcion)})
+    return rendimiento
+  }
 }
 
 //INGREDIENTES
@@ -33,11 +55,7 @@ object banana{
   method nutriente() = valor  
 }
 object hielo{
-  const valor = 0
+  const valor = 1
   method nutriente() = valor  
 }
 
-object agua {
-  const valor = 1
-  method nutriente() = valor 
-}

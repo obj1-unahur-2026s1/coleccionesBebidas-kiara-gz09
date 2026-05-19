@@ -45,7 +45,7 @@ object coctel {
   }
 }
 
-//INGREDIENTES
+// INGREDIENTES
 object leche{
   const valor = 20
   method nutriente() = valor  
